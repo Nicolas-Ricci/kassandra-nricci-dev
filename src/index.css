@@ -1,0 +1,472 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ======================================================================
+   KASSANDRA 2.1 — Global styles
+   Pixel-art futuristic neon dashboard
+   ====================================================================== */
+
+:root {
+  --c-cyan: #00f0ff;
+  --c-violet: #b537f2;
+  --c-magenta: #ff2bd6;
+  --c-gold: #ffd60a;
+  --c-mint: #4dffb8;
+  --c-deep: #0d0530;
+  --c-ink: #070217;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background: #050015;
+  color: #e8eaff;
+  font-family: 'VT323', 'Courier New', monospace;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+/* Crisp pixel rendering for SVG art */
+.pixelated,
+.pixelated * {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  shape-rendering: crispEdges;
+}
+
+/* ============================================
+   Typography helpers
+   ============================================ */
+.font-pixel {
+  font-family: 'Press Start 2P', monospace;
+  letter-spacing: 0.04em;
+}
+.font-retro {
+  font-family: 'VT323', monospace;
+  letter-spacing: 0.02em;
+}
+
+.text-glow-cyan {
+  text-shadow:
+    0 0 4px rgba(0, 240, 255, 0.9),
+    0 0 12px rgba(0, 240, 255, 0.6),
+    0 0 24px rgba(0, 240, 255, 0.35);
+}
+.text-glow-violet {
+  text-shadow:
+    0 0 4px rgba(181, 55, 242, 0.9),
+    0 0 12px rgba(181, 55, 242, 0.55);
+}
+.text-glow-gold {
+  text-shadow:
+    0 0 4px rgba(255, 214, 10, 0.9),
+    0 0 12px rgba(255, 184, 0, 0.6);
+}
+.text-glow-mint {
+  text-shadow: 0 0 6px rgba(77, 255, 184, 0.75);
+}
+
+/* ============================================
+   Pixel borders — chunky retro UI frames
+   ============================================ */
+.pixel-border {
+  position: relative;
+  background: linear-gradient(180deg, #181048 0%, #0a0428 100%);
+  border: 2px solid #00f0ff;
+  box-shadow:
+    inset 0 0 0 2px rgba(0, 0, 0, 0.65),
+    inset 0 0 24px rgba(0, 240, 255, 0.18),
+    0 0 18px rgba(0, 240, 255, 0.35);
+}
+.pixel-border::before,
+.pixel-border::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #00f0ff;
+}
+.pixel-border::before {
+  top: -4px;
+  left: -4px;
+  box-shadow:
+    calc(100% + 2px) 0 0 #00f0ff,
+    0 calc(100% + 2px) 0 #00f0ff,
+    calc(100% + 2px) calc(100% + 2px) 0 #00f0ff;
+}
+.pixel-border.violet {
+  border-color: #b537f2;
+  box-shadow:
+    inset 0 0 0 2px rgba(0, 0, 0, 0.65),
+    inset 0 0 24px rgba(181, 55, 242, 0.22),
+    0 0 18px rgba(181, 55, 242, 0.4);
+}
+.pixel-border.violet::before {
+  background: #b537f2;
+  box-shadow:
+    calc(100% + 2px) 0 0 #b537f2,
+    0 calc(100% + 2px) 0 #b537f2,
+    calc(100% + 2px) calc(100% + 2px) 0 #b537f2;
+}
+.pixel-border.magenta {
+  border-color: #ff2bd6;
+  box-shadow:
+    inset 0 0 0 2px rgba(0, 0, 0, 0.65),
+    inset 0 0 24px rgba(255, 43, 214, 0.2),
+    0 0 18px rgba(255, 43, 214, 0.4);
+}
+.pixel-border.magenta::before {
+  background: #ff2bd6;
+  box-shadow:
+    calc(100% + 2px) 0 0 #ff2bd6,
+    0 calc(100% + 2px) 0 #ff2bd6,
+    calc(100% + 2px) calc(100% + 2px) 0 #ff2bd6;
+}
+.pixel-border.gold {
+  border-color: #ffd60a;
+  box-shadow:
+    inset 0 0 0 2px rgba(0, 0, 0, 0.65),
+    inset 0 0 24px rgba(255, 184, 0, 0.25),
+    0 0 18px rgba(255, 184, 0, 0.45);
+}
+.pixel-border.gold::before {
+  background: #ffd60a;
+  box-shadow:
+    calc(100% + 2px) 0 0 #ffd60a,
+    0 calc(100% + 2px) 0 #ffd60a,
+    calc(100% + 2px) calc(100% + 2px) 0 #ffd60a;
+}
+
+/* ============================================
+   Scanlines overlay (CRT-feel for holograms)
+   ============================================ */
+.scanlines {
+  position: relative;
+  overflow: hidden;
+}
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.05) 0px,
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+/* Hologram panel base */
+.holo {
+  background:
+    linear-gradient(180deg, rgba(0, 240, 255, 0.18) 0%, rgba(0, 240, 255, 0.04) 100%),
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 240, 255, 0.08) 0px,
+      rgba(0, 240, 255, 0.08) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  border: 1px solid rgba(0, 240, 255, 0.55);
+  box-shadow:
+    0 0 10px rgba(0, 240, 255, 0.4),
+    inset 0 0 16px rgba(0, 240, 255, 0.15);
+  backdrop-filter: blur(2px);
+}
+
+/* ============================================
+   Island base — chunky pixel-art floating rock
+   ============================================ */
+.island {
+  position: relative;
+  filter: drop-shadow(0 26px 22px rgba(0, 0, 0, 0.55));
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+.island:hover {
+  transform: translateY(-8px) scale(1.02);
+  filter:
+    drop-shadow(0 32px 28px rgba(0, 0, 0, 0.6))
+    drop-shadow(0 0 22px rgba(0, 240, 255, 0.55));
+}
+.island.violet:hover {
+  filter:
+    drop-shadow(0 32px 28px rgba(0, 0, 0, 0.6))
+    drop-shadow(0 0 22px rgba(181, 55, 242, 0.55));
+}
+.island.magenta:hover {
+  filter:
+    drop-shadow(0 32px 28px rgba(0, 0, 0, 0.6))
+    drop-shadow(0 0 22px rgba(255, 43, 214, 0.55));
+}
+.island.gold:hover {
+  filter:
+    drop-shadow(0 32px 28px rgba(0, 0, 0, 0.6))
+    drop-shadow(0 0 22px rgba(255, 184, 0, 0.55));
+}
+
+/* ============================================
+   Connectors between islands
+   ============================================ */
+.connector {
+  position: absolute;
+  height: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(0, 240, 255, 0.85) 0,
+    rgba(0, 240, 255, 0.85) 6px,
+    transparent 6px,
+    transparent 12px
+  );
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* ============================================
+   Resource counter shimmer
+   ============================================ */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Progress bars */
+.bar-track {
+  background: linear-gradient(180deg, #0a0428 0%, #150842 100%);
+  border: 1px solid rgba(0, 240, 255, 0.35);
+  position: relative;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  background:
+    linear-gradient(90deg, #00f0ff 0%, #b537f2 100%);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.7);
+  position: relative;
+}
+.bar-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2.4s linear infinite;
+}
+
+/* Pixel scrolling "stars" */
+.starfield {
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, #fff, transparent),
+    radial-gradient(1px 1px at 70% 60%, #00f0ff, transparent),
+    radial-gradient(1px 1px at 40% 80%, #b537f2, transparent),
+    radial-gradient(1px 1px at 90% 20%, #fff, transparent),
+    radial-gradient(1px 1px at 10% 70%, #ffd60a, transparent),
+    radial-gradient(1px 1px at 55% 15%, #fff, transparent),
+    radial-gradient(1px 1px at 85% 85%, #ff2bd6, transparent);
+  background-size: 100% 100%;
+}
+
+/* Speech bubble tail */
+.speech-tail {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 16px 18px 0;
+  border-color: transparent #1a0d44 transparent transparent;
+  filter: drop-shadow(-2px 1px 0 #00f0ff);
+}
+
+/* Hover lift utility */
+.hover-lift {
+  transition: transform 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-3px) scale(1.04);
+  filter: brightness(1.2);
+}
+
+/* PLAY button */
+.play-btn {
+  background: linear-gradient(180deg, #ffe764 0%, #ffb800 55%, #d97706 100%);
+  border: 4px solid #fff7c2;
+  box-shadow:
+    0 6px 0 #7a3e02,
+    0 0 22px rgba(255, 184, 0, 0.85),
+    inset 0 4px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -8px 0 rgba(122, 62, 2, 0.4);
+  color: #4a1d00;
+  text-shadow:
+    1px 1px 0 #fff7c2,
+    -1px -1px 0 rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+.play-btn:hover {
+  transform: translateY(-3px) scale(1.04);
+  filter: brightness(1.12) saturate(1.2);
+}
+.play-btn:active {
+  transform: translateY(2px) scale(0.98);
+  box-shadow:
+    0 2px 0 #7a3e02,
+    0 0 14px rgba(255, 184, 0, 0.6),
+    inset 0 4px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Sidebar item */
+.side-btn {
+  position: relative;
+  transition: transform 0.2s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+.side-btn::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10%;
+  bottom: 10%;
+  width: 3px;
+  background: transparent;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+.side-btn:hover::before {
+  background: #00f0ff;
+  box-shadow: 0 0 10px #00f0ff;
+}
+.side-btn:hover {
+  transform: translateX(4px);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 240, 255, 0.18) 0%,
+    rgba(0, 240, 255, 0) 100%
+  );
+}
+
+/* Notification dot */
+.notif-dot {
+  background: #ff2bd6;
+  box-shadow: 0 0 8px #ff2bd6;
+  animation: blink 1.4s steps(1, end) infinite;
+}
+@keyframes notif-blink {
+  0%, 60%, 100% { opacity: 1; }
+  70%, 90% { opacity: 0.25; }
+}
+.notif-dot {
+  animation: notif-blink 1.4s linear infinite;
+}
+
+/* Custom scrollbar hidden globally */
+::-webkit-scrollbar { display: none; }
+
+/* No-select for game UI */
+* { user-select: none; }
+
+/* World stage — always fills the viewport */
+.world-stage {
+  width: 100vw;
+  height: 100dvh;
+  min-height: 100dvh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Mobile panels: hide native scrollbar, allow horizontal swipe */
+.mobile-panels-scroll {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.mobile-panels-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Tooltip */
+.tooltip {
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.side-btn:hover .tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Progress flicker for hologram chart bars */
+.holo-bar {
+  background: linear-gradient(180deg, #00f0ff 0%, #b537f2 100%);
+  box-shadow: 0 0 6px #00f0ff;
+}
+
+/* Subtle delay utilities */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-600 { animation-delay: 0.6s; }
+.delay-700 { animation-delay: 0.7s; }
+.delay-800 { animation-delay: 0.8s; }
+.delay-900 { animation-delay: 0.9s; }
+.delay-1000 { animation-delay: 1s; }
+.delay-1200 { animation-delay: 1.2s; }
+.delay-1500 { animation-delay: 1.5s; }
+
+/* Reset opacity for elements that animate in */
+.will-fade {
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+/* Sharp binary blink for terminal cursor */
+@keyframes tictac {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.animate-tictac {
+  animation: tictac 0.8s infinite;
+}
+
+/* Custom Scrollbar for Sidebar and Chat */
+.custom-scrollbar::-webkit-scrollbar {
+  display: block !important;
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(7, 2, 35, 0.4);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00f0ff, #ff2bd6);
+  border-radius: 10px;
+  box-shadow: 0 0 6px rgba(0, 240, 255, 0.4);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #00f0ff;
+}
+
+/* Pulse Fast Animation for NEW tag */
+@keyframes pulse-fast {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(0.95); }
+}
+.animate-pulse-fast {
+  animation: pulse-fast 1s ease-in-out infinite;
+}
